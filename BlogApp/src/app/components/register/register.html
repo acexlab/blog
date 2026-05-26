@@ -1,0 +1,45 @@
+<div class="container py-5">
+  <div class="row justify-content-center g-4 align-items-center">
+    <div class="col-12 col-lg-5">
+      <div class="card shadow-sm border-0 bg-primary text-white">
+        <div class="card-body p-4 p-md-5">
+          <span class="badge text-bg-light text-dark mb-3">Create Account</span>
+          <h2 class="fw-bold">Join the Blog App demo</h2>
+          <p class="mb-0">This panel shows what a completed registration screen could look like.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h3 class="text-center mb-4">Register</h3>
+
+          <form (ngSubmit)="submitFrom()">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="user.name" name="name">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="user.email" name="email">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">Register</button>
+
+            <p class="text-center mt-3 mb-0">
+              Already have an account?
+              <a routerLink="/login">Login</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
