@@ -1,62 +1,37 @@
-<div class="container py-5">
-	<div class="row align-items-center g-4">
-		<div class="col-12 col-lg-7">
-			<span class="badge text-bg-warning mb-3">Demo content</span>
-			<h1 class="display-5 fw-bold mb-3">Blog App</h1>
-			<p class="lead text-muted mb-4">
-				A clean mock homepage with featured posts, quick actions, and sample metrics.
-			</p>
-
-			<div class="d-flex gap-2 flex-wrap">
-				<a class="btn btn-primary" routerLink="/create-blog">Create Sample Post</a>
-				<a class="btn btn-outline-secondary" routerLink="/view-blog">View Sample Blog</a>
-			</div>
+<div class="container py-4 py-md-5">
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+		<div>
+			<h1 class="h3 mb-1">Home</h1>
+			<p class="text-muted mb-0">All blogs in a minimal structured view.</p>
 		</div>
-
-		<div class="col-12 col-lg-5">
-			<div class="card shadow-sm">
-				<div class="card-body">
-					<h5 class="card-title">Today’s Snapshot</h5>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item d-flex justify-content-between px-0">
-							<span>Published posts</span><strong>18</strong>
-						</li>
-						<li class="list-group-item d-flex justify-content-between px-0">
-							<span>Drafts</span><strong>4</strong>
-						</li>
-						<li class="list-group-item d-flex justify-content-between px-0">
-							<span>New comments</span><strong>27</strong>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+		<a class="btn btn-primary" routerLink="/create-blog">Create Blog</a>
 	</div>
 
-	<div class="row g-4 mt-2">
-		<div class="col-12 col-md-4">
-			<div class="card h-100 shadow-sm">
-				<div class="card-body">
-					<h5>Featured Post</h5>
-					<p class="text-muted mb-0">How to build a reusable Angular UI with a tidy navbar and clean routes.</p>
+	@if (loading) {
+		<div class="text-center text-muted py-5">Loading blogs...</div>
+	} @else if (errorMessage) {
+		<div class="alert alert-danger">{{ errorMessage }}</div>
+	} @else if (blogs.length === 0) {
+		<div class="alert alert-light border">No blogs found.</div>
+	} @else {
+		<div class="row g-3">
+			@for (blog of blogs; track blog.id) {
+				<div class="col-12 col-lg-6">
+					<div class="card shadow-sm h-100 border-0">
+						<div class="card-body p-4">
+							<div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+								<div>
+									<h5 class="mb-1">{{ blog.title }}</h5>
+									<p class="text-muted mb-0 small">By {{ blog.authorName }}</p>
+								</div>
+								<span class="badge text-bg-secondary">#{{ blog.id }}</span>
+							</div>
+
+							<p class="text-muted mb-3 blog-snippet">{{ blog.content }}</p>
+						</div>
+					</div>
 				</div>
-			</div>
+			}
 		</div>
-		<div class="col-12 col-md-4">
-			<div class="card h-100 shadow-sm">
-				<div class="card-body">
-					<h5>Popular Topic</h5>
-					<p class="text-muted mb-0">Bootstrap layout patterns, routing examples, and starter admin screens.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-4">
-			<div class="card h-100 shadow-sm">
-				<div class="card-body">
-					<h5>Latest Update</h5>
-					<p class="text-muted mb-0">New draft: “My first week learning Angular 21 with standalone components.”</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	}
 </div>

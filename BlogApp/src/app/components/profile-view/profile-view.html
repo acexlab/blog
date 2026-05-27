@@ -1,0 +1,38 @@
+<div class="container py-4 py-md-5 profile-shell">
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+		<div>
+			<h1 class="h3 mb-1">My Profile</h1>
+			<p class="text-muted mb-0">User summary from the active session.</p>
+		</div>
+		<a class="btn btn-outline-secondary" routerLink="/home">Back to Home</a>
+	</div>
+
+	@if (loading) {
+		<div class="text-center text-muted py-5">Loading profile...</div>
+	} @else if (errorMessage) {
+		<div class="alert alert-danger">{{ errorMessage }}</div>
+	} @else if (profile) {
+		<div class="row g-3">
+			<div class="col-12">
+				<div class="card border-0 shadow-sm profile-card h-100">
+					<div class="card-body p-4 p-md-5">
+						<div class="stats-grid">
+							<div class="stat-box">
+								<span class="stat-label">Name</span>
+								<span class="stat-value stat-text">{{ profile.name }}</span>
+							</div>
+							<div class="stat-box">
+								<span class="stat-label">Email</span>
+								<span class="stat-value stat-text">{{ profile.email }}</span>
+							</div>
+							<div class="stat-box">
+								<span class="stat-label">Blogs</span>
+								<span class="stat-value">{{ profile.blogCount }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>

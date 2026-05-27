@@ -2,47 +2,47 @@
   <div class="row justify-content-center mb-4">
     <div class="col-12 col-md-10 col-lg-8">
       <div class="input-group input-group-lg">
-        <input type="text" class="form-control" placeholder="Enter Blog Title" value="Angular navbar fixes">
-        <button class="btn btn-primary">Search</button>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title, content, or author"
+          [(ngModel)]="searchTerm"
+          name="search"
+        />
       </div>
-      <p class="text-muted mt-2 mb-0">Dummy search term prefilled for a visible demo state.</p>
+      <p class="text-muted mt-2 mb-0">Showing live blog data from the API.</p>
     </div>
   </div>
 
-  <div class="row justify-content-center g-4">
-    <div class="col-12 col-lg-8">
-      <div class="card shadow-sm">
-        <div class="card-body p-4 p-md-5">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="mb-0">Angular navbar fixes</h3>
-            <span class="badge text-bg-success">Published</span>
+  @if (loading) {
+    <div class="text-center text-muted py-5">
+      Loading blogs...
+    </div>
+  } @else if (errorMessage) {
+    <div class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  } @else if (filteredBlogs.length === 0) {
+    <div class="alert alert-light border text-center">
+      No blogs match your search.
+    </div>
+  } @else {
+    <div class="row justify-content-center g-4">
+      <div class="col-12 col-lg-8">
+        @for (blog of filteredBlogs; track blog.id) {
+          <div class="card shadow-sm mb-4">
+            <div class="card-body p-4 p-md-5">
+              <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+                <h3 class="mb-0">{{ blog.title }}</h3>
+                <span class="badge text-bg-success">Blog #{{ blog.id }}</span>
+              </div>
+              <p class="text-muted mb-2">By {{ blog.authorName }}</p>
+              <hr>
+              <p class="mb-0">{{ blog.content }}</p>
+            </div>
           </div>
-          <p class="text-muted">By Copilot Demo · May 25, 2026</p>
-          <hr>
-          <p>
-            This is a visible sample article used to verify layout, spacing, and the content area.
-          </p>
-          <p>
-            It includes a mock introduction, a short body, and enough text to show the page rendering properly.
-          </p>
-          <p class="mb-0">
-            A final paragraph gives the template more realistic density for testing responsive behavior.
-          </p>
-        </div>
+        }
       </div>
     </div>
-
-    <div class="col-12 col-lg-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5>Post Meta</h5>
-          <ul class="list-unstyled mb-0 text-muted">
-            <li>Category: Angular</li>
-            <li>Tags: navbar, routing, bootstrap</li>
-            <li>Reads: 1,284</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  }
 </div>

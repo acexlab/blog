@@ -5,6 +5,7 @@ import { Login } from './components/login/login';
 import { CreateBlog } from './components/create-blog/create-blog';
 import { UpdateBlog } from './components/update-blog/update-blog';
 import { ViewBlog } from './components/view-blog/view-blog';
+import { ProfileView } from './components/profile-view/profile-view';
 
 export const routes: Routes = [
     {
@@ -33,8 +34,16 @@ export const routes: Routes = [
         component:UpdateBlog
     },
     {
+        path:'update-blog/:id',
+        component:UpdateBlog
+    },
+    {
         path:'view-blog',
         component:ViewBlog
+    },
+    {
+        path:'profile',
+        component:ProfileView
     }
 
 ];

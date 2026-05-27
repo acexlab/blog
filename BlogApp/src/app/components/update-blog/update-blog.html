@@ -6,43 +6,74 @@
           <div class="mb-4">
             <span class="badge text-bg-warning mb-2">Editing existing post</span>
             <h3 class="mb-1">Update Blog</h3>
-            <p class="text-muted mb-0">Sample data prefilled for a blog currently in review.</p>
+            <p class="text-muted mb-0">Edit the blog and save the latest version.</p>
           </div>
 
-          <form>
-            <div class="mb-3">
-              <label class="form-label">Blog Id</label>
-              <input type="number" class="form-control" value="1024">
+          @if (loading) {
+            <div class="text-muted py-4 text-center">Loading blog details...</div>
+          } @else if (!blogId) {
+            <div class="mb-4">
+              <h4 class="mb-1">Select a blog to edit</h4>
+              <p class="text-muted mb-0">Choose one of your blogs to open the editor.</p>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input type="text" class="form-control" value="Refining the navbar and route structure">
-            </div>
+            @if (editableBlogs.length === 0) {
+              <div class="alert alert-light border">No blogs available for editing.</div>
+            } @else {
+              <div class="list-group">
+                @for (blog of editableBlogs; track blog.id) {
+                  <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" [routerLink]="['/update-blog', blog.id]">
+                    <span>
+                      <strong>{{ blog.title }}</strong>
+                      <span class="text-muted ms-2">By {{ blog.authorName }}</span>
+                    </span>
+                    <span class="badge text-bg-warning">Edit</span>
+                  </a>
+                }
+              </div>
+            }
+          } @else if (errorMessage) {
+            <div class="alert alert-danger">{{ errorMessage }}</div>
+            @if (errorMessage === 'Session timed out. Please log in.') {
+              <a class="btn btn-primary" href="/login">Go to Login</a>
+            }
+          } @else if (errorMessage === 'Only the owner can edit this blog.') {
+            <div class="alert alert-warning">{{ errorMessage }}</div>
+            <a class="btn btn-outline-secondary" href="/view-blog">Back to blogs</a>
+          } @else {
+            <form (ngSubmit)="submitForm()">
+              <div class="mb-3">
+                <label class="form-label">Blog Id</label>
+                <input type="text" class="form-control" [value]="blogId" disabled>
+              </div>
 
-            <div class="mb-3">
-              <label class="form-label">Contents</label>
-              <textarea rows="8" class="form-control">Updated body copy: the navbar now uses matching routes, the collapse button is wired, and the page shows the correct outlet only once.</textarea>
-            </div>
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  [(ngModel)]="blog.title"
+                  placeholder="Enter blog title">
+              </div>
 
-            <div class="d-flex gap-2 flex-wrap">
-              <button class="btn btn-warning">Update Blog</button>
-              <button type="button" class="btn btn-outline-secondary">Save as Draft</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+              <div class="mb-3">
+                <label class="form-label">Content</label>
+                <textarea
+                  rows="8"
+                  class="form-control"
+                  name="content"
+                  [(ngModel)]="blog.content"
+                  placeholder="Write your blog content here">
+                </textarea>
+              </div>
 
-    <div class="col-12 col-lg-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title">Revision Notes</h5>
-          <ul class="mb-0 ps-3 text-muted">
-            <li>Added visible sample copy</li>
-            <li>Adjusted routes to match navbar links</li>
-            <li>Kept the layout simple and readable</li>
-          </ul>
+              <div class="d-flex gap-2 flex-wrap">
+                <button type="submit" class="btn btn-warning">Update Blog</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteBlog()">Delete Blog</button>
+              </div>
+            </form>
+          }
         </div>
       </div>
     </div>

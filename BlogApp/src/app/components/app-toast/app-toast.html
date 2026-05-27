@@ -1,0 +1,18 @@
+@if (toast.visible()) {
+  <div class="toast-shell">
+    <div class="toast-card" [class.toast-success]="toast.kind() === 'success'" [class.toast-danger]="toast.kind() === 'danger'" [class.toast-warning]="toast.kind() === 'warning'" [class.toast-info]="toast.kind() === 'info'">
+      <div class="d-flex align-items-start justify-content-between gap-3">
+        <div>
+          <div class="toast-title">
+            @if (toast.kind() === 'success') { Success }
+            @else if (toast.kind() === 'danger') { Error }
+            @else if (toast.kind() === 'warning') { Warning }
+            @else { Info }
+          </div>
+          <div class="toast-message">{{ toast.message() }}</div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="toast.hide()"></button>
+      </div>
+    </div>
+  </div>
+}
